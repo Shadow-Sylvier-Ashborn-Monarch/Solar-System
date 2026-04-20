@@ -1,0 +1,50 @@
+using UnityEngine;
+
+public class Movement : MonoBehaviour
+{
+  private Rigidbody rb;
+  void Start()
+  {
+    rb = GetComponent<Rigidbody>();//();//transform.Find("Body").GetComponent<Rigidbody>();
+
+  }
+
+  // Update is called once per frame
+  void Update()
+  {
+    float moveX = Input.GetAxisRaw("Horizontal"); // A/D or Left/Right
+    float moveY = Input.GetAxisRaw("Vertical");   // W/S or Up/Down
+    float speed = 10;
+    forward(moveY, 10f, moveX, 20f, 1f);
+  
+  }
+
+  public void forward(float inputForward, float moveSpeed, float inputTurn, float turnSpeed, float stickForce)
+  {
+    RaycastHit hit;
+    Vector3 moveDir = transform.forward * inputForward;
+
+    if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.2f))
+    {
+      Vector3 slopeMove = Vector3.ProjectOnPlane(moveDir, hit.normal).normalized;
+
+      rb.AddForce(slopeMove * moveSpeed, ForceMode.Acceleration);
+    }
+
+    float turn = inputTurn * turnSpeed * Time.deltaTime;
+    rb.MoveRotation(rb.rotation * Quaternion.Euler(0f, turn, 0f));
+
+    rb.AddForce(Vector3.down * stickForce);
+
+    rb.linearDamping = 2f;          // slows linear movement
+    rb.angularDamping = 5f;   // prevents unwanted spinning
+
+    Vector3 velocity = rb.linearVelocity;
+    Vector3 forwardVel = transform.forward * Vector3.Dot(velocity, transform.forward);
+    Vector3 sideVel = transform.right * Vector3.Dot(velocity, transform.right);
+
+    rb.linearVelocity = forwardVel + sideVel * 0.2f + Vector3.up * velocity.y;
+  }
+
+
+}
