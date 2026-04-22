@@ -12,9 +12,9 @@ public class CreatureSystem : MonoBehaviour
     void Start()
     {
         Food = FoodSystem.GetComponent<FoodSystem>().Foods;
-        for(int i = 0; i < 1; i++)
+        for(int i = 0; i < 5; i++)
         {
-            GameObject newCreature = Instantiate(CreaturePrefab, new Vector3(2, 2, 2), Quaternion.identity);
+            GameObject newCreature = Instantiate(CreaturePrefab, new Vector3(Random.Range(-10, 10), 2, Random.Range(-10, 10)), Quaternion.identity);
             Creatures.Add(newCreature);
            
         }

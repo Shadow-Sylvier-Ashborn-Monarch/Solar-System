@@ -12,7 +12,7 @@ public class FoodSystem : MonoBehaviour
     {
         for(int i = 0; i < 1; i++)
         {
-            Foods.Add(new Vector3(1, 1, 1));
+            Foods.Add(new Vector3(UnityEngine.Random.Range(-10, 10), 1, UnityEngine.Random.Range(-10, 10)));
             Instantiate(Body, Foods[i], Quaternion.identity) ;
         }
     }

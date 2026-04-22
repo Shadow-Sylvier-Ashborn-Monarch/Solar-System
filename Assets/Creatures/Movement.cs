@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -19,10 +20,16 @@ public class Movement : MonoBehaviour
   
   }
 
+  public Vector3 closestFood(List<Vector3> list)
+  {
+      foreach(Vector3 s in list)
+  }  
+
+
   public void tracking(Vector3 target)
   {
     Vector3 direction = target-transform.position;
-        direction *= 10; //new Vector3(5f, 5f, 5f);
+        direction *= 2; //new Vector3(5f, 5f, 5f);
         rb.linearVelocity = direction;
   }
 
