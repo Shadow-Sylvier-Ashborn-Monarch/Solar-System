@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-  private Rigidbody rb;
-  void Start()
+  public Rigidbody rb;
+  void Awake()
   {
     rb = GetComponent<Rigidbody>();//();//transform.Find("Body").GetComponent<Rigidbody>();
 
@@ -17,6 +17,13 @@ public class Movement : MonoBehaviour
     float speed = 10;
     forward(moveY, 10f, moveX, 20f, 1f);
   
+  }
+
+  public void tracking(Vector3 target)
+  {
+    Vector3 direction = target-transform.position;
+        direction *= 10; //new Vector3(5f, 5f, 5f);
+        rb.linearVelocity = direction;
   }
 
   public void forward(float inputForward, float moveSpeed, float inputTurn, float turnSpeed, float stickForce)
