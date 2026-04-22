@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Net.Security;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -17,20 +19,30 @@ public class Movement : MonoBehaviour
     float moveY = Input.GetAxisRaw("Vertical");   // W/S or Up/Down
     float speed = 10;
     forward(moveY, 10f, moveX, 20f, 1f);
-  
+
   }
 
   public Vector3 closestFood(List<Vector3> list)
   {
-      foreach(Vector3 s in list)
-  }  
+    Vector3 closest;
+    float record = Mathf.Infinity;
+    foreach (Vector3 s in list)
+    {
+      float dist = Math.Abs((s - transform.position).magnitude);
+      if (dist < record)
+      {
+        closest = s;
+      }
+    }
+    return closest;
+  }
 
 
   public void tracking(Vector3 target)
   {
-    Vector3 direction = target-transform.position;
-        direction *= 2; //new Vector3(5f, 5f, 5f);
-        rb.linearVelocity = direction;
+    Vector3 direction = target - transform.position;
+    direction *= 2; //new Vector3(5f, 5f, 5f);
+    rb.linearVelocity = direction;
   }
 
   public void forward(float inputForward, float moveSpeed, float inputTurn, float turnSpeed, float stickForce)
