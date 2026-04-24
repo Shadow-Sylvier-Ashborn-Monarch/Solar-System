@@ -6,7 +6,7 @@ public class CreatureSystem : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public GameObject FoodSystem;
-    public List<Vector3> Food;
+    public List<GameObject> Food;
     public List<GameObject> Creatures;
     public GameObject CreaturePrefab;
     void Start()
@@ -24,7 +24,7 @@ public class CreatureSystem : MonoBehaviour
     void Update()
     {
         foreach(GameObject x in Creatures){
-            x.GetComponent<Movement>().tracking(Food[0]);
+            x.GetComponent<Movement>().Thinking(Food);
         }
     }
 }

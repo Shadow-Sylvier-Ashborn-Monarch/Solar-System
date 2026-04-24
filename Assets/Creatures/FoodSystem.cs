@@ -6,14 +6,15 @@ using UnityEngine;
 public class FoodSystem : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public List<Vector3> Foods = new List<Vector3>();
+    public List<GameObject> Foods = new List<GameObject>();
     public GameObject Body;
     void Start()
     {
         for(int i = 0; i < 1; i++)
         {
-            Foods.Add(new Vector3(UnityEngine.Random.Range(-10, 10), 1, UnityEngine.Random.Range(-10, 10)));
-            Instantiate(Body, Foods[i], Quaternion.identity) ;
+            GameObject newFood =  Instantiate(Body, new Vector3(UnityEngine.Random.Range(-10, 10), 1, UnityEngine.Random.Range(-10, 10)), Quaternion.identity);
+            Foods.Add(newFood);
+           ;
         }
     }
 
