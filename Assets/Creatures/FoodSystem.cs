@@ -10,18 +10,27 @@ public class FoodSystem : MonoBehaviour
     public GameObject Body;
     void Start()
     {
-        for(int i = 0; i < 1; i++)
+        for(int i = 0; i < 2; i++)
         {
-            GameObject newFood =  Instantiate(Body, new Vector3(UnityEngine.Random.Range(-10, 10), 1, UnityEngine.Random.Range(-10, 10)), Quaternion.identity);
-            Foods.Add(newFood);
-           ;
+           Create();
         }
+    }
+
+    public void Create()
+    {
+        GameObject newFood =  Instantiate(Body, new Vector3(UnityEngine.Random.Range(-60, 60), 40, UnityEngine.Random.Range(-60, 60)), Quaternion.identity);
+            newFood.tag = "Food"; 
+
+            Foods.Add(newFood); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Foods.Count < 100)
+        {
+         Create();   
+        }
     }
 }
 

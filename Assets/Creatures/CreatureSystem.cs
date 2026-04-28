@@ -24,7 +24,7 @@ public class CreatureSystem : MonoBehaviour
     void Update()
     {
         foreach(GameObject x in Creatures){
-            x.GetComponent<Movement>().Thinking(Food);
+            x.GetComponent<Creatures>().Thinking(Food);
         }
     }
 }

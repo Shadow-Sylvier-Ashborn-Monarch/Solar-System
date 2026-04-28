@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class Creatures : MonoBehaviour
 {
   public Rigidbody rb;
   public NeuralNetwork Brain;
@@ -15,7 +15,7 @@ public class Movement : MonoBehaviour
 
     int Output1 = Brain.AddNode(NodeType.Output);
     int Output2 = Brain.AddNode(NodeType.Output);
- 
+
     Brain.AddConnection(Input1, Output1, 1f);
     Brain.AddConnection(Input2, Output2, 1f);
   }
@@ -28,49 +28,53 @@ public class Movement : MonoBehaviour
     float moveY = Input.GetAxisRaw("Vertical");   // W/S or Up/Down
     float speed = 10;
     forward(moveY, 10f, moveX, 20f, 1f);
-  
+
   }
 
   public Vector3 closestFood(List<GameObject> list)
   {
     Vector3 closest = new Vector3();
     float record = Mathf.Infinity;
-    foreach(GameObject s in list)
+    foreach (GameObject s in list)
     {
       float dist = (s.transform.position - transform.position).magnitude;
-      if(dist < record)
-        {
-            closest = s.transform.position;
-            record = dist;   
-        } 
+      if (dist < record)
+      {
+        closest = s.transform.position;
+        record = dist;
+      }
     }
     return closest;
   }
 
-    public void OnCollisionEnter(Collision collision)
-    {
-        
-    }
-
-    public void Thinking(List<GameObject> list)
+  public void OnCollisionEnter(Collision collision)
   {
-     Vector3 food = closestFood(list);
-     Vector3 distVec = (food - transform.position);
-     float angeVec = Vector3.SignedAngle(transform.forward, distVec, Vector3.up);
-     float[] inputs = {1, angeVec/180f, 0};
-     float[] thoughts = Brain.FeedForward(inputs);
+    if (collision.gameObject.tag == "Food")
+    {
+      print("Food Collision");
+      print(GameObject.Find("Creature System").GetComponent<CreatureSystem>().Food.Remove(collision.gameObject));
+      Destroy(collision.gameObject);
+    }
+  }
+
+  public void Thinking(List<GameObject> list)
+  {
+    Vector3 food = closestFood(list);
+    Vector3 distVec = (food - transform.position);
+    float angeVec = Vector3.SignedAngle(transform.forward, distVec, Vector3.up);
+    float[] inputs = { 1, angeVec / 180f, 0 };
+    float[] thoughts = Brain.FeedForward(inputs);
 
 
-    print($"Constant: {inputs[0]}\n Angle: {inputs[1]}\n Speed: {thoughts[0]}\n Turn: {thoughts[1]}");
     forward(thoughts[0], 10f, thoughts[1], 300f, 1f);
   }
 
 
   public void tracking(Vector3 target)
   {
-    Vector3 direction = target-transform.position;
-        direction *= 2; //new Vector3(5f, 5f, 5f);
-        rb.linearVelocity = direction;
+    Vector3 direction = target - transform.position;
+    direction *= 2; //new Vector3(5f, 5f, 5f);
+    rb.linearVelocity = direction;
   }
 
   public void forward(float inputForward, float moveSpeed, float inputTurn, float turnSpeed, float stickForce)
