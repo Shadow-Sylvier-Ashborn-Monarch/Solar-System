@@ -5,6 +5,9 @@ public class Creatures : MonoBehaviour
 {
   public Rigidbody rb;
   public NeuralNetwork Brain;
+
+  public List<float> DNA = new List<float>();
+  public float Health;
   void Awake()
   {
     rb = GetComponent<Rigidbody>();//();//transform.Find("Body").GetComponent<Rigidbody>();
@@ -18,17 +21,47 @@ public class Creatures : MonoBehaviour
 
     Brain.AddConnection(Input1, Output1, 1f);
     Brain.AddConnection(Input2, Output2, 1f);
+
+    Health = 20;
+    //Speed
+    this.DNA[0] = DNA[0] + Random.Range(-5, 5);
+    // Mobility = ;
+    this.DNA[1] = DNA[1] + Random.Range(-5, 5);
+    // DNA[2] = ;
   }
 
   // Update is called once per frame
+
+
+
+  public Creatures()
+  {
+    Health = 20;
+    //Speed
+    DNA[0] = Random.Range(0, 100);
+    // Mobility = ;
+    DNA[1] = Random.Range(0, 100);
+    // DNA[2] = ;
+  }
+
   void Update()
   {
-    //Thinking();
+    Health -= 1*Time.deltaTime;
     float moveX = Input.GetAxisRaw("Horizontal"); // A/D or Left/Right
     float moveY = Input.GetAxisRaw("Vertical");   // W/S or Up/Down
     float speed = 10;
-    forward(moveY, 10f, moveX, 20f, 1f);
+    forward(moveY, DNA[0], moveX, DNA[1], 1f);
 
+  }
+
+  public bool Dead()
+  {
+    return Health<=0;
+  }
+
+  public  bool Baby()
+  {
+      return this;
   }
 
   public Vector3 closestFood(List<GameObject> list)
@@ -54,6 +87,7 @@ public class Creatures : MonoBehaviour
       print("Food Collision");
       print(GameObject.Find("Creature System").GetComponent<CreatureSystem>().Food.Remove(collision.gameObject));
       Destroy(collision.gameObject);
+      Health += 10;
     }
   }
 
