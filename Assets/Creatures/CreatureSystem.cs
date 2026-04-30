@@ -12,45 +12,55 @@ public class CreatureSystem : MonoBehaviour
     void Start()
     {
         Food = FoodSystem.GetComponent<FoodSystem>().Foods;
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 100; i++)
         {
-            GameObject newCreature = Instantiate(CreaturePrefab, new Vector3(Random.Range(-10, 10), 2, Random.Range(-10, 10)), Quaternion.identity);
-            Creatures.Add(newCreature);
+            addCreature();
 
         }
     }
 
-    public void addCreature(MonoBehaviour Creature)
+    public void addCreature(GameObject Creature = null)
     {
-        if (Creature == null)
-        {
-            GameObject newCreature = Instantiate(CreaturePrefab, new Vector3(Random.Range(-10, 10), 2, Random.Range(-10, 10)), Quaternion.identity);
-            Creatures.Add(newCreature);
+        GameObject newCreature = Instantiate(CreaturePrefab, 
+        new Vector3(Random.Range(-60, 60), 5, Random.Range(-60, 60)), Quaternion.identity);
+
+        if (Creature != null){
+          newCreature.GetComponent<Creatures>().Inherit(Creature);
         }
-        else
-        {
-            GameObject newCreature = Instantiate(CreaturePrefab, new Vector3(Random.Range(-10, 10), 2, Random.Range(-10, 10)), Quaternion.identity);
-            Destroy(newCreature.GetComponent<Creatures>());
-          //  newCreature.AddComponent<Creatures>()();
-        }
+        Creatures.Add(newCreature);
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        List<GameObject> babyList = new List<GameObject>();
+        List<GameObject> deadList = new List<GameObject>();
         foreach (GameObject x in Creatures)
         {
             Creatures creature = x.GetComponent<Creatures>();
             creature.Thinking(Food);
             if (creature.Dead())
             {
-                Creatures.Remove(x);
-                Destroy(x);
+                deadList.Add(x);
             }
-            if (Random.Range(0, 100) < 10)
+            if (Random.Range(0, 1000) < 1)
             {
-               // Creatures.
+                babyList.Add(creature.Baby());
             }
+        }
+        foreach (GameObject x in babyList)
+        {
+            addCreature(x);
+        }
+        foreach (GameObject x in deadList)
+        {
+            Creatures.Remove(x);
+                Destroy(x);
+        }
+        if(Creatures.Count < 5)
+        {
+            addCreature();
         }
     }
 }
