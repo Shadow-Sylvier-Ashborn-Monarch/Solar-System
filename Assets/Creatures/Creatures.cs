@@ -43,7 +43,9 @@ public class Creatures : MonoBehaviour
   {
     Creatures cre = creature.GetComponent<Creatures>();
     this.Brain = cre.Brain;
-    this.Brain.Mutate();
+    if(Random.Range(1, 100) < 70){
+       this.Brain.Mutate();
+    }
     //Speed
     this.DNA[0] = cre.DNA[0] + Random.Range(-5, 5);
     //Mobility
@@ -108,7 +110,7 @@ public class Creatures : MonoBehaviour
     Vector3 food = closestFood(list);
     Vector3 distVec = (food - transform.position);
     float angeVec = Vector3.SignedAngle(transform.forward, distVec, Vector3.up);
-    float[] inputs = { 1, angeVec / 180f, distVec.magnitude/10f , Health/20};
+    float[] inputs = { 1, angeVec / 180f, distVec.magnitude/10f , Health/60};
     float[] thoughts = Brain.FeedForward(inputs);
 
 

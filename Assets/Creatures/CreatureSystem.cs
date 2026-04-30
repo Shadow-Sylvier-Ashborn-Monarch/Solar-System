@@ -44,7 +44,7 @@ public class CreatureSystem : MonoBehaviour
             {
                 deadList.Add(x);
             }
-            if (Random.Range(0, 1000) < 1)
+            if (Random.Range(0, 5000) < 1)
             {
                 babyList.Add(creature.Baby());
             }
