@@ -101,7 +101,7 @@ public class Creatures : MonoBehaviour
       print("Food Collision");
       print(GameObject.Find("Creature System").GetComponent<CreatureSystem>().Food.Remove(collision.gameObject));
       Destroy(collision.gameObject);
-      Health += 10;
+      Health += 5;
     }
   }
 

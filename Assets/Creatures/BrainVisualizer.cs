@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEditor;
 
 public class NetworkVisualizer : MonoBehaviour
 {
@@ -17,14 +18,18 @@ public class NetworkVisualizer : MonoBehaviour
         if (network == null)
         {
             network = System.GetComponent<CreatureSystem>().Creatures[0].GetComponent<Creatures>().Brain;
-            OnDrawGizmos();
+            
         }
         else if (network != System.GetComponent<CreatureSystem>().Creatures[0].GetComponent<Creatures>().Brain && network != null)
         {
             CalculateNodePositions();
             network = System.GetComponent<CreatureSystem>().Creatures[0].GetComponent<Creatures>().Brain;
-            OnDrawGizmos();
+            
 
+        }
+        if(network != null)
+        {
+          //  OnDrawGizmos();
         }
 
 
