@@ -11,4 +11,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Planet.unity
     guid: e81a508561bd348a0b9b2765685168d1
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: f9af048712e8e0e408498caf1f88b629,
+      type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 1a7f478be6f0e1f488f829a59d8af7fb,
+      type: 2}
+  m_UseUCBPForAssetBundles: 0
