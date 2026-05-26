@@ -91,6 +91,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!135 &7153937623058358969
 SphereCollider:
@@ -125,7 +126,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb9377b1633e90d4aa0338d201cfa222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
+  pheremoneVal: 1
   rb: {fileID: 0}
+  age: 0
+  fat: 10
+  energy: 10
+  food: 10
 --- !u!54 &5232758465956887129
 Rigidbody:
   m_ObjectHideFlags: 0

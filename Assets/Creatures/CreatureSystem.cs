@@ -4,63 +4,64 @@ using UnityEngine;
 
 public class CreatureSystem : MonoBehaviour
 {
+    public int minNumCreatures = 109;
+    public int maxNumCreatures = 1090;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public GameObject FoodSystem;
-    public List<GameObject> Food;
-    public List<GameObject> Creatures;
+    public static List<GameObject> Creatures = new List<GameObject>();
     public GameObject CreaturePrefab;
+    public static GameObject _CreaturePrefab;
     void Start()
     {
-        Food = FoodSystem.GetComponent<FoodSystem>().Foods;
-        for (int i = 0; i < 100; i++)
+        _CreaturePrefab = CreaturePrefab;
+        for (int i = 0; i < minNumCreatures; i++)
         {
-            addCreature();
-
+            AddCreature();
         }
     }
 
-    public void addCreature(GameObject Creature = null)
+    public static void AddCreature(GameObject Creature = null)
     {
-        GameObject newCreature = Instantiate(CreaturePrefab, 
-        new Vector3(Random.Range(-60, 60), 5, Random.Range(-60, 60)), Quaternion.identity);
-
+        GameObject newCreature;
         if (Creature != null){
-          newCreature.GetComponent<Creatures>().Inherit(Creature);
+            newCreature = Instantiate(Creature, 
+                new Vector3(Creature.transform.position.x, 5, Creature.transform.position.z), Quaternion.identity);
+            newCreature.GetComponent<Creatures>().Inherit(Creature);
         }
-        Creatures.Add(newCreature);
+        else
+        {
+            newCreature = Instantiate(_CreaturePrefab, 
+                new Vector3(Random.Range(-60, 60), 5, Random.Range(-60, 60)), Quaternion.identity);
+            newCreature.GetComponent<Creatures>().Brain.Mutate();
+        }
 
+        Creatures.Add(newCreature);
     }
+
+    public static void RemoveCreature(GameObject Life = null)
+    {
+        if (Life == null){
+          int toRemove = Random.Range(0,Creatures.Count);
+          GameObject c = Creatures[toRemove];
+          Creatures.RemoveAt(toRemove);
+          Destroy(c);
+          return;
+        }
+        Creatures.Remove(Life);
+        Destroy(Life);
+    }
+
 
     // Update is called once per frame
     void Update()
     {
-        List<GameObject> babyList = new List<GameObject>();
-        List<GameObject> deadList = new List<GameObject>();
-        foreach (GameObject x in Creatures)
+        if(Creatures.Count < minNumCreatures)
         {
-            Creatures creature = x.GetComponent<Creatures>();
-            creature.Thinking(Food);
-            if (creature.Dead())
-            {
-                deadList.Add(x);
-            }
-            if (Random.Range(0, 5000) < 1)
-            {
-                babyList.Add(creature.Baby());
-            }
+            AddCreature();
         }
-        foreach (GameObject x in babyList)
+        if (Creatures.Count > maxNumCreatures)
         {
-            addCreature(x);
-        }
-        foreach (GameObject x in deadList)
-        {
-            Creatures.Remove(x);
-                Destroy(x);
-        }
-        if(Creatures.Count < 5)
-        {
-            addCreature();
+            RemoveCreature();
         }
     }
 }

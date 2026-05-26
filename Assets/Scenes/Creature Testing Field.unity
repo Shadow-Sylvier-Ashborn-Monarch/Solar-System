@@ -356,9 +356,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 518cdbace32a8ac4db5f03cdacef6b9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CreatureSystem
+  minNumCreatures: 10
+  maxNumCreatures: 100
   FoodSystem: {fileID: 1068329191}
-  Food: []
-  Creatures: []
   CreaturePrefab: {fileID: 4269884849886343076, guid: 54a06c85c6f1517409bdea801e149ff9,
     type: 3}
 --- !u!4 &668373823
@@ -405,7 +405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c96f2cb4a53d3d48b343fcdf817b180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BrainVisualizer
-  System: {fileID: 668373821}
+  Creature: {fileID: 0}
   nodeRadius: 0.3
   dimensions: {x: 10, y: 6}
 --- !u!4 &1010053715
@@ -452,9 +452,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da24dc033224500418ac7a5bcf22073a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodSystem
-  Foods: []
-  Body: {fileID: 2284062823870995728, guid: 15602a43efc57174eb18fc26716f709f, type: 3}
+  Body: {fileID: 2414730853933654582, guid: 15602a43efc57174eb18fc26716f709f, type: 3}
   AREA: 200
+  minFood: 1000
 --- !u!4 &1068329193
 Transform:
   m_ObjectHideFlags: 0

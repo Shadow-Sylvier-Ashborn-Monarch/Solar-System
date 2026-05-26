@@ -5,7 +5,7 @@ using UnityEditor;
 
 public class NetworkVisualizer : MonoBehaviour
 {
-    public GameObject System; // Reference to the brain you want to see
+    public Creatures Creature; // Reference to the brain you want to see
     public NeuralNetwork network;
     public float nodeRadius = 0.3f;
     public Vector2 dimensions = new Vector2(10, 6);
@@ -15,22 +15,19 @@ public class NetworkVisualizer : MonoBehaviour
 
     void Update()
     {
-        if (network == null)
+        if (Creature == null)
         {
-            network = System.GetComponent<CreatureSystem>().Creatures[0].GetComponent<Creatures>().Brain;
-            
-        }
-        else if (network != System.GetComponent<CreatureSystem>().Creatures[0].GetComponent<Creatures>().Brain && network != null)
-        {
+            network = CreatureSystem.Creatures[0].GetComponent<Creatures>().Brain;
+            if (network == null) return;
             CalculateNodePositions();
-            network = System.GetComponent<CreatureSystem>().Creatures[0].GetComponent<Creatures>().Brain;
             
-
         }
-        if(network != null)
+        else if (Creature != null)
         {
-          //  OnDrawGizmos();
+            network = Creature.Brain;
+            CalculateNodePositions();
         }
+
 
 
     }
